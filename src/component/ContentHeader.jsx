@@ -2,21 +2,24 @@ import React, {Component} from 'react';
 import './ContentHeader.less';
 import {Avatar, Menu} from 'antd';
 import {UserOutlined} from '@ant-design/icons';
+import {connect} from 'react-redux';
 
 const {SubMenu} = Menu;
+const mapState2Props = (state, props) => {
+    return {
+        ...props,
+        admin: state.admin,
+    };
+};
 
 class ContentHeader extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            admin: {
-                name: 'root'
-            }
-        };
+        this.state = {};
     }
 
     render() {
-        const {admin} = this.state;
+        const admin = this.props.admin || {name: '未登录'};
         return (
             <div className="content-header">
                 <span className="banner">WechatTools</span>
@@ -47,4 +50,4 @@ class ContentHeader extends Component {
     }
 }
 
-export default ContentHeader;
+export default connect(mapState2Props, null)(ContentHeader);
