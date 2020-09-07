@@ -1,15 +1,27 @@
 import React, {Component} from 'react';
-import {PageHeader, Result} from 'antd';
+import {Result} from 'antd';
+import {setTitle} from '../store/actionCreators';
+import {connect} from 'react-redux';
+
+const mapAction2Props = (dispatch, props) => {
+    return {
+        ...props,
+        setTitle: (...args) => dispatch(setTitle(...args)),
+    };
+};
 
 class Home extends Component {
+    componentDidMount() {
+        this.props.setTitle('主页', '微信公众号推广工具');
+    }
+
     render() {
         return (
             <div className="home">
-                <PageHeader title="主页" subTitle="微信公众号工具"/>
                 <Result status="success" title="WechatTools" subTitle="Develop by levent!"/>
             </div>
         );
     }
 }
 
-export default Home;
+export default connect(null, mapAction2Props)(Home);

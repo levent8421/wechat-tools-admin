@@ -1,4 +1,4 @@
-import {ACTION_LOGIN, ACTION_SET_TOKEN, ACTION_TOGGLE_LOGIN_DIALOG} from './actionTypes';
+import {ACTION_LOGIN, ACTION_SET_TITLE, ACTION_SET_TOKEN, ACTION_TOGGLE_LOGIN_DIALOG} from './actionTypes';
 
 const TOKEN_STORAGE_NAME = 'wechat_tools.web_token';
 const getToken = () => {
@@ -11,6 +11,10 @@ const defaultState = {
     admin: null,
     webToken: getToken(),
     loginDialogVisible: false,
+    header: {
+        title: '',
+        subTitle: '',
+    }
 };
 
 const actionTable = {};
@@ -33,6 +37,14 @@ registerReducer(ACTION_TOGGLE_LOGIN_DIALOG, (state, action) => {
     return {
         ...state,
         loginDialogVisible: action.data.loginDialogVisible,
+    };
+});
+registerReducer(ACTION_SET_TITLE, (state, action) => {
+    return {
+        ...state,
+        header: {
+            ...action.data
+        }
     };
 });
 export default (state = defaultState, action) => {

@@ -1,4 +1,4 @@
-import {ACTION_SET_TOKEN, ACTION_TOGGLE_LOGIN_DIALOG} from './actionTypes';
+import {ACTION_SET_TITLE, ACTION_SET_TOKEN, ACTION_TOGGLE_LOGIN_DIALOG} from './actionTypes';
 
 export const setToken = (account, token) => {
     return {
@@ -14,6 +14,16 @@ export const toggleLoginDialog = show => {
         type: ACTION_TOGGLE_LOGIN_DIALOG,
         data: {
             loginDialogVisible: show,
+        }
+    };
+};
+
+export const setTitle = (title, subTitle) => {
+    return {
+        type: ACTION_SET_TITLE,
+        data: {
+            title,
+            subTitle,
         }
     };
 };

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Layout, message, Modal, Typography} from "antd";
+import {Layout, message, Modal, PageHeader, Typography} from "antd";
 import './ContentLayout.less';
 import ContentHeader from './ContentHeader';
 import ContentMenu from './ContentMenu';
@@ -24,6 +24,7 @@ const mapState2Props = (state, props) => {
         webToken: state.webToken,
         admin: state.admin,
         loginDialogVisible: state.loginDialogVisible,
+        header: state.header,
     };
 };
 const mapAction2Props = (dispatch, props) => {
@@ -55,6 +56,7 @@ class ContentLayout extends Component {
     }
 
     render() {
+        const {header} = this.props;
         return (
             <>
                 <Layout className="content-layout">
@@ -66,6 +68,7 @@ class ContentLayout extends Component {
                             <ContentHeader/>
                         </Header>
                         <Content>
+                            <PageHeader title={header.title} subTitle={header.subTitle}/>
                             <Switch>
                                 <Route exact path="/">
                                     <Home/>

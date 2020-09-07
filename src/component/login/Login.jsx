@@ -3,13 +3,14 @@ import './Login.less';
 import {Button, Card, Form, Input, message} from 'antd';
 import {login} from '../../api/admin';
 import {connect} from 'react-redux';
-import {setToken} from '../../store/actionCreators';
+import {setTitle, setToken} from '../../store/actionCreators';
 import {withRouter} from 'react-router-dom';
 
 const mapAction2Props = (dispatch, props) => {
     return {
         ...props,
-        setToken: (...args) => dispatch(setToken(...args))
+        setToken: (...args) => dispatch(setToken(...args)),
+        setTitle: (...args) => dispatch(setTitle(...args)),
     };
 };
 const mapState2Props = (state, props) => {
@@ -29,6 +30,7 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        this.props.setTitle('登录', '管理员登录');
         if (this.props.webToken) {
             message.success('已登录,跳转到主页...');
             this.props.history.push({
