@@ -4,6 +4,7 @@ import {Button, Form, Input, message, Modal, Space, Table} from 'antd';
 import {createMerchant, fetchMerchants} from '../../api/merchant';
 import './MerchantManagement.less';
 import {PlusCircleOutlined} from '@ant-design/icons';
+import {withRouter} from 'react-router-dom';
 
 class MerchantManagement extends Component {
     constructor(props) {
@@ -108,7 +109,15 @@ class MerchantManagement extends Component {
             <Button type="link" onClick={() => this.editMerchant(row)}>编辑</Button>
             <Button type="link" onClick={() => this.deleteMerchant(row)}>删除</Button>
             <Button type="link" onClick={() => this.disableMerchant(row)}>禁用</Button>
+            <Button type="link" onClick={() => this.setupWechat(row)}>配置公众号</Button>
         </Space>);
+    }
+
+    setupWechat(merchant) {
+        const history = this.props.history;
+        history.push({
+            pathname: `/merchant-management/${merchant.id}/setup-wechat/`
+        })
     }
 
     editMerchant(merchant) {
@@ -153,4 +162,5 @@ class MerchantManagement extends Component {
     }
 }
 
-export default mapStateAndActions(MerchantManagement);
+const component = mapStateAndActions(MerchantManagement);
+export default withRouter(component);

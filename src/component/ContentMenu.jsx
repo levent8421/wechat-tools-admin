@@ -15,7 +15,7 @@ const MenuItem = Menu.Item;
 const {SubMenu} = Menu;
 const menuKeyPathTable = {
     'home': '/',
-    'merchant-management': '/merchant-management',
+    'merchant-management': '/merchant-management/',
     'merchant-statistics': '/merchant-statistics',
     'admin-management': '/admin-management',
 };

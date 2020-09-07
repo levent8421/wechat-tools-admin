@@ -3,18 +3,12 @@ import {Layout, message, Modal, PageHeader, Typography} from "antd";
 import './ContentLayout.less';
 import ContentHeader from './ContentHeader';
 import ContentMenu from './ContentMenu';
-import {Route, Switch, withRouter} from 'react-router-dom';
-
-import Home from './Home';
-import MerchantManagement from './merchant/MerchantManagement';
-import MerchantStatistics from './merchant/MerchantStatistics';
-import AdminManagement from './admin/AdminManagement';
-import NotFound from './NotFound';
-import Login from './login/Login';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-
 import {currentAmdin} from '../api/admin';
 import {setToken, toggleLoginDialog} from '../store/actionCreators';
+import {renderRoutes} from 'react-router-config';
+import {routes} from '../router/routes';
 
 const {Sider, Header, Footer, Content} = Layout;
 const {Text} = Typography;
@@ -69,26 +63,7 @@ class ContentLayout extends Component {
                         </Header>
                         <Content>
                             <PageHeader title={header.title} subTitle={header.subTitle}/>
-                            <Switch>
-                                <Route exact path="/">
-                                    <Home/>
-                                </Route>
-                                <Route exact path="/merchant-management">
-                                    <MerchantManagement/>
-                                </Route>
-                                <Route exact path="/merchant-statistics">
-                                    <MerchantStatistics/>
-                                </Route>
-                                <Route exact path="/admin-management">
-                                    <AdminManagement/>
-                                </Route>
-                                <Route exact path="/login">
-                                    <Login/>
-                                </Route>
-                                <Route exact path="/404">
-                                    <NotFound/>
-                                </Route>
-                            </Switch>
+                            {renderRoutes(routes)}
                         </Content>
                         <Footer>
                             Wechat Tools Admin, <Text type="success">Author: Levent</Text>

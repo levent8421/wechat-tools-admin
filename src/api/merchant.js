@@ -19,3 +19,11 @@ export const createMerchant = data => {
         data: data,
     });
 };
+
+
+export const requireById = id => {
+    return request({
+        url: `/api/token/merchant/${id}`,
+        method: 'get',
+    });
+};
