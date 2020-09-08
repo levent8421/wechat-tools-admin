@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {mapStateAndActions} from '../../store/storeUtils';
-import {requireById} from '../../api/merchant';
+import {bindWechatAppId, requireById} from '../../api/merchant';
 import './SetupMerchantWechat.less';
-import {Alert, Button, Card, Form, Input, message, Select} from 'antd';
+import {Alert, Button, Card, Form, Input, message, Modal, Select, Space} from 'antd';
 import {applyTokenFetcherConfig, fetchConfigByMerchant} from '../../api/tokenFetcherStrategy';
 
 const WechatTokenFetchStrategies = [
@@ -25,14 +25,7 @@ const WechatTokenFetchStrategies = [
 const FetcherConfigRenderTable = {
     1: () => {
         return (<>
-            <Form.Item name="appId" label="APP_ID"
-                       rules={[{required: '请输入公众号app id'}]}>
-                <Input/>
-            </Form.Item>
-            <Form.Item name="secret" label="SECRET"
-                       rules={[{required: '请输入公众号secret'}]}>
-                <Input/>
-            </Form.Item>
+            <Alert type="success" message="该模式无需额外配置参数"/>
         </>);
     }
 };
@@ -46,6 +39,7 @@ class SetupMerchantWechat extends Component {
             merchant: {},
             selectedStrategyCode: -1,
             strategy: {},
+            showBindWechatAppModal: false,
         };
     }
 
@@ -80,9 +74,32 @@ class SetupMerchantWechat extends Component {
         return (<Alert type="warning" message="请选择正确的令牌获取策略"/>);
     }
 
+    showBindWechatAppModal(show) {
+        this.setState({showBindWechatAppModal: show});
+    }
+
+    doBindWechatApp() {
+        if (!this.bindingAppId) {
+            message.warn('请输入正确的APP_ID');
+            return;
+        }
+        if (!this.bindingSecret) {
+            message.warn('请输入正确的SECRET');
+            return;
+        }
+        const appId = this.bindingAppId;
+        const secret = this.bindingSecret;
+        const {merchant} = this.state;
+        bindWechatAppId(merchant.id, {appId, secret}).then(res => {
+            this.setState({merchant: res});
+            message.success('绑定成功');
+            this.showBindWechatAppModal(false);
+        });
+    }
+
     render() {
         const _this = this;
-        const {merchant} = this.state;
+        const {merchant, showBindWechatAppModal} = this.state;
         return (
             <div className="setup-wechat">
                 <Card size="large" title={merchant.name} extra={merchant.sn}>
@@ -90,6 +107,15 @@ class SetupMerchantWechat extends Component {
                     <p>权限代码： {merchant.authorizationCode}</p>
                     <p>创建时间： {merchant.createTime}</p>
                     <p>上次更新时间： {merchant.updateTime}</p>
+                    <p>微信公众号AppID：{merchant.wechatAppId}</p>
+                    <Space>
+                        微信公众号SECRET：
+                        <span>{merchant.wechatSecret}</span>
+                        <Button type="primary"
+                                onClick={() => this.showBindWechatAppModal(true)}>
+                            绑定公众号
+                        </Button>
+                    </Space>
                 </Card>
                 <div className="form-wrapper">
                     <Form name="setup-wechat" onFinish={options => this.applyWechatConfig(options)}
@@ -117,6 +143,17 @@ class SetupMerchantWechat extends Component {
                         </Form.Item>
                     </Form>
                 </div>
+                <Modal visible={showBindWechatAppModal} title="绑定公众号" onOk={() => this.doBindWechatApp()}
+                       onCancel={() => this.showBindWechatAppModal(false)}>
+                    <Form name="bind-wechat-app">
+                        <Form.Item name="appId" label="APP_ID">
+                            <Input onChange={e => this.bindingAppId = e.target.value}/>
+                        </Form.Item>
+                        <Form.Item name="secret" label="SECRET">
+                            <Input onChange={e => this.bindingSecret = e.target.value}/>
+                        </Form.Item>
+                    </Form>
+                </Modal>
             </div>
         );
     }

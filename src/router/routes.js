@@ -2,6 +2,7 @@ import Home from '../component/Home';
 import NotFound from '../component/NotFound';
 import MerchantManagement from '../component/merchant/MerchantManagement';
 import SetupMerchantWechat from '../component/merchant/SetupMerchantWechat';
+import Login from '../component/login/Login';
 
 const routes = [
     {
@@ -13,6 +14,11 @@ const routes = [
         path: '/404',
         exact: true,
         component: NotFound,
+    },
+    {
+        path: '/login',
+        exact: true,
+        component: Login,
     },
     {
         path: '/merchant-management',
