@@ -27,3 +27,14 @@ export const requireById = id => {
         method: 'get',
     });
 };
+
+export const bindWechatAppId = (merchantId, config) => {
+    return request({
+        url: `/api/token/merchant/${merchantId}/wechat-app-id`,
+        method: 'post',
+        data: {
+            wechatAppId: config.appId,
+            wechatSecret: config.secret,
+        }
+    });
+};
