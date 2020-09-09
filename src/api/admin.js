@@ -15,3 +15,27 @@ export const currentAmdin = () => {
         method: 'get',
     });
 };
+
+
+export const fetchAdminList = () => {
+    return request({
+        url: '/api/token/admin/',
+        method: 'get',
+    });
+};
+
+
+export const createAdmin = data => {
+    return request({
+        url: '/api/token/admin/',
+        method: 'put',
+        data,
+    });
+};
+
+export const deleteAdmin = adminId => {
+    return request({
+        url: `/api/token/admin/${adminId}`,
+        method: 'delete',
+    });
+};
