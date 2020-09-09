@@ -1,6 +1,6 @@
 import {ACTION_LOGIN, ACTION_SET_TITLE, ACTION_SET_TOKEN, ACTION_TOGGLE_LOGIN_DIALOG} from './actionTypes';
 
-const TOKEN_STORAGE_NAME = 'wechat_tools.web_token';
+const TOKEN_STORAGE_NAME = 'wechat_tools.admin_token';
 const getToken = () => {
     return sessionStorage.getItem(TOKEN_STORAGE_NAME);
 };
