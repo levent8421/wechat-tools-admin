@@ -3,6 +3,7 @@ import NotFound from '../component/NotFound';
 import MerchantManagement from '../component/merchant/MerchantManagement';
 import SetupMerchantWechat from '../component/merchant/SetupMerchantWechat';
 import MerchantStatistics from '../component/merchant/MerchantStatistics';
+import MerchantAppManagement from '../component/merchant/MerchantAppManagement';
 import AdminManagement from '../component/admin/AdminManagement';
 import Login from '../component/login/Login';
 
@@ -36,6 +37,11 @@ const routes = [
         path: '/merchant-statistics',
         exact: true,
         component: MerchantStatistics,
+    },
+    {
+        path: '/merchant-apps',
+        exact: true,
+        component: MerchantAppManagement,
     },
     {
         path: '/admin-management',

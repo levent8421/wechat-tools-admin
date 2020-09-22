@@ -106,10 +106,8 @@ class MerchantManagement extends Component {
 
     renderTableRowOperations(row) {
         return (<Space>
-            <Button type="link" onClick={() => this.editMerchant(row)}>编辑</Button>
-            <Button type="link" onClick={() => this.deleteMerchant(row)}>删除</Button>
-            <Button type="link" onClick={() => this.disableMerchant(row)}>禁用</Button>
             <Button type="link" onClick={() => this.setupWechat(row)}>配置公众号</Button>
+            <Button type="link" onClick={() => this.appManagement(row)}>应用管理</Button>
         </Space>);
     }
 
@@ -118,18 +116,6 @@ class MerchantManagement extends Component {
         history.push({
             pathname: `/merchant-management/${merchant.id}/setup-wechat/`
         })
-    }
-
-    editMerchant(merchant) {
-        message.success('编辑' + merchant.name)
-    }
-
-    deleteMerchant(merchant) {
-        message.success('删除' + merchant.name)
-    }
-
-    disableMerchant(merchant) {
-        message.success('禁用' + merchant.name)
     }
 
     showCreateMerchantDialog() {
@@ -158,6 +144,13 @@ class MerchantManagement extends Component {
             this.setState({
                 createModalLoading: false,
             });
+        });
+    }
+
+    appManagement(merchant) {
+        this.props.history.push({
+            pathname: '/merchant-apps',
+            search: `?merchantId=${merchant.id}`,
         });
     }
 }
